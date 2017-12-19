@@ -29,7 +29,6 @@ INDEX VERSION 1.130+/Users/simmsjt/SD/quiz-project/.metadata/.plugins/org.eclips
 3277980169.index
 1690311816.index
 740214376.index
-494725277.index
 176677169.index
 1169329903.index
 3662454327.index
