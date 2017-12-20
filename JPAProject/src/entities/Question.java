@@ -1,10 +1,14 @@
 package entities;
 
-import javax.persistence.Column;
+import java.util.Set;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Question {
@@ -13,6 +17,13 @@ public class Question {
 	private int id;
 	
 	private String questionText;
+	
+	@OneToMany(mappedBy = "q")
+	private Set<Answer> answers;
+	
+	@ManyToOne
+	@JoinColumn(name = "quiz_id")
+	private Quiz q;
 
 	public String getQuestionText() {
 		return questionText;
@@ -24,6 +35,22 @@ public class Question {
 
 	public int getId() {
 		return id;
+	}
+
+	public Set<Answer> getAnswers() {
+		return answers;
+	}
+
+	public void setAnswers(Set<Answer> answers) {
+		this.answers = answers;
+	}
+
+	public Quiz getQ() {
+		return q;
+	}
+
+	public void setQ(Quiz q) {
+		this.q = q;
 	}
 
 	@Override
