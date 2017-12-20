@@ -25,6 +25,7 @@ public class Question {
 	@JoinColumn(name = "quiz_id")
 	private Quiz q;
 
+	
 	public String getQuestionText() {
 		return questionText;
 	}

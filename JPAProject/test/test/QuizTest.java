@@ -37,4 +37,10 @@ public class QuizTest {
 	public void query_test() {
 		assertEquals("What kind of cake are you?",q.getName());
 	}
+	
+	@Test
+	public void query_test_questions() {
+		assertEquals(2,q.getQuestions().size());
+	}
+	
 }

@@ -30,6 +30,15 @@ public class Quiz {
 	public int getId() {
 		return id;
 	}
+	
+	public Set<Question> getQuestions() {
+		return questions;
+	}
+
+	public void setQuestions(Set<Question> questions) {
+		this.questions = questions;
+	}
+
 	@Override
 	public String toString() {
 		return "Quiz [id=" + id + ", name=" + name + "]";
