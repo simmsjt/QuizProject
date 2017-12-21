@@ -2,12 +2,16 @@ package entities;
 
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Quiz {
@@ -17,7 +21,8 @@ public class Quiz {
 	@Column(name = "name")
 	private String name;
 	
-	@OneToMany(mappedBy = "q")
+	@JsonIgnore
+	@OneToMany(mappedBy = "q",fetch = FetchType.EAGER,cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
 	private Set<Question> questions;
 	
 	public String getName() {
@@ -38,6 +43,11 @@ public class Quiz {
 	public void setQuestions(Set<Question> questions) {
 		this.questions = questions;
 	}
+	
+	public void addQuestion(Question question) {
+		questions.add(question);
+	}
+	
 
 	@Override
 	public String toString() {

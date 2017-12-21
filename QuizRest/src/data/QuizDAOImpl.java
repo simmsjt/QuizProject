@@ -1,6 +1,7 @@
 package data;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -10,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import entities.Question;
 import entities.Quiz;
 
 @Transactional
@@ -66,6 +68,41 @@ public class QuizDAOImpl implements QuizDAO{
 			em.remove(getQuizById(id));
 			return true;
 		} catch(Exception e) {
+			return false;
+		}
+	}
+	
+	@Override
+	public Set<Question> getQuestions(int id) {
+		return getQuizById(id).getQuestions();
+	}
+	
+	@Override
+	public Question addQuestion(String json,int id) {
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			Question newQuestion = mapper.readValue(json, Question.class);
+			Quiz q =em.find(Quiz.class, id);
+			newQuestion.setQ(q);
+			q.addQuestion(newQuestion);
+			return newQuestion;
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	@Override
+	public Boolean deleteQuestion(int id) {
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			String query = "DELETE FROM Answer a where a.q.id = :id";
+			em.createQuery(query).setParameter("id", id).executeUpdate();
+			query = "DELETE FROM Question q WHERE q.id = :id";
+			em.createQuery(query).setParameter("id", id).executeUpdate();
+			return true;
+		} catch(Exception e) {
+			e.printStackTrace();
 			return false;
 		}
 	}

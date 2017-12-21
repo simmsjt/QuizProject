@@ -1,6 +1,7 @@
 package controllers;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import data.QuizDAO;
+import entities.Question;
 import entities.Quiz;
 
 @RestController
@@ -58,6 +60,24 @@ public class QuizController {
 	public Boolean update(@PathVariable int id) {
 		Boolean a = dao.deleteQuiz(id);
 		return a;
+	}
+	
+	@RequestMapping(path="quizzes/{id}/questions", method=RequestMethod.GET)
+	public Set<Question> addQuestion(@PathVariable int id) {
+		Set<Question> q = dao.getQuestions(id);
+		return q;
+	}
+	
+	@RequestMapping(path="quizzes/{id}/questions", method=RequestMethod.POST)
+	public Question addQuestion(@RequestBody String json, @PathVariable int id) {
+		Question q = dao.addQuestion(json, id);
+		return q;
+	}
+	
+	@RequestMapping(path="quizzes/{id}/questions/{qid}", method=RequestMethod.DELETE)
+	public Boolean deleteQuestion(@PathVariable int id, @PathVariable int qid) {
+		Boolean q = dao.deleteQuestion(qid);
+		return q;
 	}
 	
 	
